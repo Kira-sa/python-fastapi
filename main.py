@@ -1,16 +1,22 @@
-# This is a sample Python script.
+from fastapi import FastAPI
+import uvicorn
+from mylib.logic import do_magic
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+app = FastAPI()
 
 
-# Press the green button in the gutter to run the script.
+@app.get("/")
+async def root():
+    return {"message": "Try call /magic"}
+
+
+@app.get("/magic/{name}")
+async def magic(name: str):
+    """Page for some magic"""
+
+    result = do_magic(name)
+    return {"result": result}
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    uvicorn.run(app, port=8080, host="127.0.0.1")

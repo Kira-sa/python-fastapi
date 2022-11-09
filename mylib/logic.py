@@ -1,5 +1,3 @@
-
-
 def do_magic(name="Alex"):
     """Work example func"""
 
